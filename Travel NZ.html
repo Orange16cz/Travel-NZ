@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Zealand Tourism | Travel NZ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0A6EBD', // New Zealand Blue
+            secondary: '#2E8B57', // Nature Green
+            accent: '#FF7F50', // Vibrant Orange
+            neutral: '#F5F5F5', // Background Gray
+            dark: '#333333' // Text Black
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+      .transition-custom {
+        transition: all 0.3s ease;
+      }
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .route-line {
+        stroke-dasharray: 10;
+        animation: dash 20s linear infinite;
+      }
+      @keyframes dash {
+        to {
+          stroke-dashoffset: 1000;
+        }
+      }
+      .city-marker {
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .city-marker:hover {
+        transform: scale(1.2);
+        filter: brightness(1.2);
+      }
+      .route-item.active {
+        border-color: #0A6EBD;
+        background-color: rgba(10, 110, 189, 0.05);
+      }
+      .route-name {
+        color: #0A6EBD;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .route-name:hover {
+        color: #085aa8;
+        text-decoration-thickness: 2px;
+      }
+      .filter-active {
+        background-color: #0A6EBD;
+        color: white;
+      }
+      .page {
+        display: none;
+        min-height: calc(100vh - 13rem);
+      }
+      .page.active {
+        display: block;
+      }
+    }
+    .banner-bg {
+      background-image: url('https://aigc-image.bj.bcebos.com/miaobi/5mao/b%275paw6KW/5YWw5pyA5L2z5peF5ri45a2j6IqC5piv5Yeg5pyI5Lu9XzE3MjUzOTk3NTUuNDYwNTQ2N18xNzI1Mzk5NzU2LjE5NTE3MzdfMTcyNTM5OTc1Ni45MjUyMzg2XzE3MjUzOTk3NTcuNzMyMDMwOV8xNzI1Mzk5NzU4LjMzODA0OTJfMTcyNTM5OTc1OC45MDY3NDc4XzE3MjUzOTk3NTkuNzAxMDIzMw%3D%3D%27/6.png');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="font-sans text-dark bg-white relative">
+  <!-- Navigation Bar -->
+  <header id="navbar" class="fixed w-full z-40 transition-custom bg-transparent">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="#" class="logo flex items-center">
+  <!-- Insert SVG logo code -->
+  <svg width="60" height="30" viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+    <!-- Background Circle -->
+    <circle cx="40" cy="40" r="35" fill="#ffffff" opacity="0.2"/>
+    
+    <!-- Silver Fern Graphic -->
+    <path d="M40,10 C50,20 60,25 65,35 C70,45 65,55 60,65 C50,75 45,70 40,65 C35,70 30,75 20,65 C15,55 10,45 15,35 C20,25 30,20 40,10 Z" 
+          fill="#ffffff"/>
+    
+    <!-- Mountain Outline -->
+    <path d="M70,60 L90,30 L110,50 L130,25 L150,55 L170,35 L190,60" 
+          fill="none" stroke="#ffffff" stroke-width="3"/>
+    
+    <!-- Wave Graphic -->
+    <path d="M70,60 C90,70 110,50 130,60 C150,70 170,50 190,60" 
+          fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <span class="text-white font-bold">Travel NZ</span>
+</a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-8">
+        <a href="#" class="nav-link text-white hover:text-accent transition-custom font-medium" data-page="home">Home</a>
+        <a href="#" class="nav-link text-white hover:text-accent transition-custom font-medium" data-page="tours">Tours</a>
+        <a href="#" class="nav-link text-white hover:text-accent transition-custom font-medium" data-page="contact">Contact Us</a>
+      </nav>
+      
+      <!-- Mobile Menu Button -->
+      <button id="menuBtn" class="md:hidden text-white text-2xl">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div id="mobileMenu" class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-y-full opacity-0 transition-custom pointer-events-none z-50">
+      <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+        <a href="#" class="nav-link text-dark hover:text-primary transition-custom font-medium py-2 border-b border-gray-100" data-page="home">Home</a>
+        <a href="#" class="nav-link text-dark hover:text-primary transition-custom font-medium py-2 border-b border-gray-100" data-page="tours">Tours</a>
+        <a href="#" class="nav-link text-dark hover:text-primary transition-custom font-medium py-2" data-page="contact">Contact Us</a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Home Page Content -->
+  <main id="homePage" class="page active">
+    <!-- Hero Section -->
+    <section class="relative h-screen bg-cover bg-center" style="background-image: url('https://picsum.photos/id/10/1920/1080');">
+      <div class="absolute inset-0 bg-dark bg-opacity-40"></div>
+      <div class="container mx-auto px-4 h-full flex items-center relative z-10">
+        <div class="max-w-2xl text-white">
+          <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-shadow mb-6">
+            Discover the Pristine Beauty of New Zealand
+          </h1>
+          <p class="text-[clamp(1rem,2vw,1.25rem)] mb-8 text-shadow">
+            From majestic glaciers to pristine rainforests, vibrant cities to tranquil countryside, New Zealand offers unparalleled natural and cultural experiences
+          </p>
+          <a href="#" class="nav-link inline-block bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-8 rounded-full transition-custom shadow-lg hover:shadow-xl transform hover:-translate-y-1" data-page="tours">
+            View Popular Tours
+          </a>
+        </div>
+      </div>
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+        <i class="fa fa-angle-down text-3xl"></i>
+      </div>
+    </section>
+    <!-- Featured Categories Section -->
+    <section class="py-20 bg-neutral">
+      <div class="container mx-auto px-4">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-center mb-16">Ways to Explore New Zealand</h2>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Category 1 -->
+          <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-custom overflow-hidden transform hover:-translate-y-2">
+            <div class="h-48 overflow-hidden">
+              <img src="https://gips1.baidu.com/it/u=1842015642,2537898219&fm=3074&app=3074&f=JPEG?w=1080&h=1050&type=normal&func=" alt="Outdoor Adventure" class="w-full h-full object-cover transition-custom hover:scale-110">
+            </div>
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                <i class="fa fa-hiking text-primary text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-3">Outdoor Adventure</h3>
+              <p class="text-gray-600 mb-4">Experience skydiving, bungee jumping, hiking and other thrilling activities to challenge your limits</p>
+              <a href="#" class="tour-filter text-primary font-medium inline-flex items-center" data-filter="adventure">
+                Explore Adventure <i class="fa fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Category 2 -->
+          <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-custom overflow-hidden transform hover:-translate-y-2">
+            <div class="h-48 overflow-hidden">
+              <img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1194,h_797/w_73,x_13,y_13,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/kjqzbkvyittfnvb9uqxc/%E7%BA%BD%E8%A5%BF%E5%85%B0%E7%B1%B3%E6%B3%B0%E6%AF%9B%E5%88%A9%E6%96%87%E5%8C%96%E6%9D%91%E4%BD%93%E9%AA%8C%E4%B9%8B%E6%97%85.jpg" alt="Cultural Experience" class="w-full h-full object-cover transition-custom hover:scale-110">
+            </div>
+            <div class="p-6">
+              <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mb-4">
+                <i class="fa fa-users text-secondary text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-3">Cultural Experience</h3>
+              <p class="text-gray-600 mb-4">Deeply understand Maori culture, participate in traditional ceremonies, and feel its unique charm</p>
+              <a href="#" class="tour-filter text-secondary font-medium inline-flex items-center" data-filter="culture">
+                Explore Culture <i class="fa fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Category 3 -->
+          <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-custom overflow-hidden transform hover:-translate-y-2">
+            <div class="h-48 overflow-hidden">
+              <img src="https://t8.baidu.com/it/u=3359220910,1933030477&fm=193" alt="Natural Scenery" class="w-full h-full object-cover transition-custom hover:scale-110">
+            </div>
+            <div class="p-6">
+              <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-4">
+                <i class="fa fa-tree text-accent text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-3">Natural Scenery</h3>
+              <p class="text-gray-600 mb-4">Visit glaciers, lakes, rainforests and other natural wonders to experience pristine beauty</p>
+              <a href="#" class="tour-filter text-accent font-medium inline-flex items-center" data-filter="nature">
+                Explore Nature <i class="fa fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Popular Tours Recommendation -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-end mb-12">
+          <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold">Popular Tours</h2>
+          <a href="#" class="hidden md:flex items-center text-primary font-medium hover:underline nav-link" data-page="tours">
+            View All <i class="fa fa-long-arrow-right ml-2"></i>
+          </a>
+        </div>
+        
+        <div class="overflow-x-auto pb-4">
+          <div class="flex space-x-6 min-w-max">
+            <!-- Tour 1 -->
+            <div class="w-80 bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom">
+              <div class="relative">
+                <img src="https://gips1.baidu.com/it/u=1842015642,2537898219&fm=3074&app=3074&f=JPEG?w=1080&h=1050&type=normal&func=" alt="Queenstown Skydiving" class="w-full h-56 object-cover">
+                <div class="absolute top-4 right-4 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                  Popular
+                </div>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center mb-2">
+                  <div class="text-yellow-400 flex">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                  </div>
+                  <span class="text-gray-600 text-sm ml-2">(128 reviews)</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Queenstown Skydiving</h3>
+                <p class="text-gray-600 text-sm mb-4">Jump from 15,000 feet, overlooking the beautiful Lake Wakatipu</p>
+                <div class="flex justify-between items-center">
+                  <div>
+                    <span class="text-primary font-bold text-xl">¥2,899</span>
+                    <span class="text-gray-500 text-sm">/person</span>
+                  </div>
+                  <a href="#" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium scroll-to-tour" data-tour="skydive">
+                    Learn More
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Tour 2 -->
+            <div class="w-80 bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom">
+              <div class="relative">
+                <img src="https://t8.baidu.com/it/u=3359220910,1933030477&fm=193" alt="Milford Sound" class="w-full h-56 object-cover">
+              </div>
+              <div class="p-5">
+                <div class="flex items-center mb-2">
+                  <div class="text-yellow-400 flex">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <span class="text-gray-600 text-sm ml-2">(96 reviews)</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Milford Sound Cruise</h3>
+                <p class="text-gray-600 text-sm mb-4">Explore the 8th Wonder of the World, admire waterfalls and wildlife</p>
+                <div class="flex justify-between items-center">
+                  <div>
+                    <span class="text-primary font-bold text-xl">¥1,699</span>
+                    <span class="text-gray-500 text-sm">/person</span>
+                  </div>
+                  <a href="#" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium scroll-to-tour" data-tour="milford">
+                    Learn More
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Tour 3 -->
+            <div class="w-80 bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom">
+              <div class="relative">
+                <img src="https://res.klook.com/image/upload/c_fill,w_1265,h_712/q_80/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/w4acnkgddiwaeaghc9ry.jpg" alt="Maori Cultural Experience" class="w-full h-56 object-cover">
+              </div>
+              <div class="p-5">
+                <div class="flex items-center mb-2">
+                  <div class="text-yellow-400 flex">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                  </div>
+                  <span class="text-gray-600 text-sm ml-2">(156 reviews)</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Maori Cultural Village Experience</h3>
+                <p class="text-gray-600 text-sm mb-4">Participate in traditional welcome ceremony, watch cultural performances, taste hangi food</p>
+                <div class="flex justify-between items-center">
+                  <div>
+                    <span class="text-primary font-bold text-xl">¥999</span>
+                    <span class="text-gray-500 text-sm">/person</span>
+                  </div>
+                  <a href="#" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium scroll-to-tour" data-tour="maori">
+                    Learn More
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Tour 4 -->
+            <div class="w-80 bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom">
+              <div class="relative">
+                <img src="https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%276ZyN5q%2BU54m55Lq65p2R5ri46KeIXzE3Mjk5NjgzMTMuMDM0Mjg1XzE3Mjk5NjgzMTMuODEwNzc5XzE3Mjk5NjgzMTQuODI4NzcxOF8xNzI5OTY4MzE2LjE0Mzc4N18xNzI5OTY4MzE2Ljk3MDE0OF8xNzI5OTY4MzE4LjA4NTUwNzQ%3D%27/5.png" alt="Hobbiton Village" class="w-full h-56 object-cover">
+              </div>
+              <div class="p-5">
+                <div class="flex items-center mb-2">
+                  <div class="text-yellow-400 flex">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                  </div>
+                  <span class="text-gray-600 text-sm ml-2">(215 reviews)</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Hobbiton Village Tour</h3>
+                <p class="text-gray-600 text-sm mb-4">Visit the filming location of "The Lord of the Rings", step into fairy-tale Hobbit holes</p>
+                <div class="flex justify-between items-center">
+                  <div>
+                    <span class="text-primary font-bold text-xl">¥1,299</span>
+                    <span class="text-gray-500 text-sm">/person</span>
+                  </div>
+                  <a href="#" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium scroll-to-tour" data-tour="hobbiton">
+                    Learn More
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-8 text-center md:hidden">
+          <a href="#" class="inline-flex items-center text-primary font-medium hover:underline nav-link" data-page="tours">
+            View All Tours <i class="fa fa-long-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- Map Display -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="lg:grid lg:grid-cols-3 gap-8">
+          <div class="lg:col-span-1">
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <h2 class="text-2xl font-bold mb-6">Selected Tour Routes</h2>
+              
+              <div class="space-y-4 mb-8">
+                <div class="route-item p-4 border rounded-lg cursor-pointer transition-custom" data-route="north">
+                  <h3 class="font-bold text-lg mb-1">North Island Classic 5-Day Tour</h3>
+                  <p class="text-gray-600 text-sm mb-2">Explore Auckland, Rotorua and Hobbiton Village</p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-primary font-bold">¥8,999/person</span>
+                    <button class="view-cost-btn text-sm text-primary hover:underline route-name" data-route="north">View Cost Details</button>
+                  </div>
+                </div>
+                
+                <div class="route-item p-4 border rounded-lg cursor-pointer transition-custom" data-route="south">
+                  <h3 class="font-bold text-lg mb-1">South Island Nature 7-Day Tour</h3>
+                  <p class="text-gray-600 text-sm mb-2">Experience Christchurch, Queenstown and Milford Sound</p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-primary font-bold">¥12,999/person</span>
+                    <button class="view-cost-btn text-sm text-primary hover:underline route-name" data-route="south">View Cost Details</button>
+                  </div>
+                </div>
+                
+                <div class="route-item p-4 border rounded-lg cursor-pointer transition-custom" data-route="combo">
+                  <h3 class="font-bold text-lg mb-1">North & South Island Panorama 12-Day Tour</h3>
+                  <p class="text-gray-600 text-sm mb-2">Comprehensive experience of North and South Island highlights</p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-primary font-bold">¥19,999/person</span>
+                    <button class="view-cost-btn text-sm text-primary hover:underline route-name" data-route="combo">View Cost Details</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-6 border-t">
+                <a id="routeToTours" href="#" class="block w-full bg-primary hover:bg-primary/90 text-white text-center font-semibold py-3 rounded-lg transition-custom nav-link" data-page="tours">
+                  View Route Related Tours
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Map Display -->
+          <div class="lg:col-span-2 relative z-10">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden h-[600px] relative">
+              <div class="absolute top-0 left-0 w-full p-4 bg-primary text-white font-bold text-lg">
+                New Zealand Tour Route Map
+              </div>
+              <div class="pt-14 h-full">
+                <svg class="w-full h-full" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+                  <!-- New Zealand Map Background -->
+                  <rect x="0" y="0" width="1000" height="600" fill="#E8F4F8" />
+                  
+                  <!-- North Island -->
+                  <path d="M300,150 Q400,100 500,120 Q600,140 650,200 Q680,280 620,320 Q550,350 480,330 Q400,310 350,280 Q320,230 300,150" fill="#A3D9FF" stroke="#0A6EBD" stroke-width="2" />
+                  
+                  <!-- South Island -->
+                  <path d="M250,350 Q350,330 450,340 Q550,350 650,370 Q700,420 680,480 Q650,530 580,550 Q500,560 420,540 Q350,520 280,480 Q240,430 250,350" fill="#A3D9FF" stroke="#0A6EBD" stroke-width="2" />
+                  
+                  <!-- Route 1: North Island Classic Route -->
+                  <path id="routeNorth" class="route-line" d="M350,200 L450,250 L500,280 L350,200" stroke="#FF7F50" stroke-width="4" fill="none" />
+                  
+                  <!-- Route 2: South Island Nature Route -->
+                  <path id="routeSouth" class="route-line hidden" d="M420,400 L580,380 L550,450 L600,420" stroke="#2E8B57" stroke-width="4" fill="none" />
+                  
+                  <!-- Route 3: North & South Island Panorama Route -->
+                  <path id="routeCombo1" class="route-line hidden" d="M350,200 L450,250 L500,280 L450,340" stroke="#8B4513" stroke-width="4" fill="none" />
+                  <path id="routeCombo2" class="route-line hidden" d="M450,340 L420,400 L580,380 L550,450 L600,420" stroke="#8B4513" stroke-width="4" fill="none" />
+                  
+                  <!-- City Markers -->
+                  <a href="#" class="scroll-to-tour" data-tour="auckland">
+                    <circle cx="350" cy="200" r="8" fill="#0A6EBD" class="city-marker" data-city="auckland" />
+                    <text x="360" y="200" font-size="14" fill="#333">Auckland</text>
+                  </a>
+                  
+                  <a href="#" class="scroll-to-tour" data-tour="maori">
+                    <circle cx="450" cy="250" r="8" fill="#0A6EBD" class="city-marker" data-city="rotorua" />
+                    <text x="460" y="250" font-size="14" fill="#333">Rotorua</text>
+                  </a>
+                  
+                  <a href="#" class="scroll-to-tour" data-tour="hobbiton">
+                    <circle cx="500" cy="280" r="8" fill="#0A6EBD" class="city-marker" data-city="hobbiton" />
+                    <text x="510" y="280" font-size="14" fill="#333">Matamata</text>
+                  </a>
+                  
+                  <a href="#" class="scroll-to-tour" data-tour="christchurch">
+                    <circle cx="420" cy="400" r="8" fill="#0A6EBD" class="city-marker" data-city="christchurch" />
+                    <text x="430" y="400" font-size="14" fill="#333">Christchurch</text>
+                  </a>
+                  
+                  <a href="#" class="scroll-to-tour" data-tour="skydive">
+                    <circle cx="550" cy="450" r="8" fill="#0A6EBD" class="city-marker" data-city="queenstown" />
+                    <text x="560" y="450" font-size="14" fill="#333">Queenstown</text>
+                  </a>
+                  
+                  <a href="#" class="scroll-to-tour" data-tour="milford">
+                    <circle cx="600" cy="420" r="8" fill="#0A6EBD" class="city-marker" data-city="milford" />
+                    <text x="610" y="420" font-size="14" fill="#333">Milford Sound</text>
+                  </a>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Subscription Section -->
+    <section class="py-20 bg-primary">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-white mb-4">Get the Latest New Zealand Travel Information</h2>
+          <p class="text-white/80 mb-8 text-lg">Subscribe to our emails for exclusive offers, travel guides and seasonal activity information</p>
+          
+          <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+            <input type="email" placeholder="Enter your email address" class="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+            <button type="submit" class="bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-6 rounded-lg transition-custom whitespace-nowrap">
+              Subscribe Now
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+    <!-- Tours Page Content -->
+  <main id="toursPage" class="page pt-24">
+    <!-- Page Title Section -->
+    <section class="bg-primary py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4">New Zealand Selected Tours</h1>
+        <p class="text-white/80 max-w-2xl mx-auto text-lg">
+          From thrilling adventures to serene nature explorations, cultural experiences to food journeys, we have selected the most worthwhile tours in New Zealand for you
+        </p>
+      </div>
+    </section>
+    
+    <!-- Filter Section -->
+    <section class="py-8 bg-neutral">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-wrap gap-3">
+          <button class="filter-btn px-4 py-2 rounded-full bg-white shadow-sm hover:shadow transition-custom filter-active" data-filter="all">
+            All Tours
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-full bg-white shadow-sm hover:shadow transition-custom" data-filter="adventure">
+            <i class="fa fa-hiking mr-1"></i> Outdoor Adventure
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-full bg-white shadow-sm hover:shadow transition-custom" data-filter="culture">
+            <i class="fa fa-users mr-1"></i> Cultural Experience
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-full bg-white shadow-sm hover:shadow transition-custom" data-filter="nature">
+            <i class="fa fa-tree mr-1"></i> Natural Scenery
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-full bg-white shadow-sm hover:shadow transition-custom" data-filter="food">
+            <i class="fa fa-cutlery mr-1"></i> Food Experience
+          </button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Tour List Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Tour 1 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="adventure" id="skydive">
+            <div class="relative">
+              <img src="https://gips1.baidu.com/it/u=1842015642,2537898219&fm=3074&app=3074&f=JPEG?w=1080&h=1050&type=normal&func=" alt="Queenstown Skydiving" class="w-full h-56 object-cover">
+              <div class="absolute top-4 right-4 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                Popular
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(128 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Queenstown Skydiving</h3>
+              <p class="text-gray-600 text-sm mb-4">Jump from 15,000 feet, overlooking the beautiful Lake Wakatipu, professional instructors accompany throughout, safe and reliable.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 3 hours (including training)</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Queenstown</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥2,899</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Queenstown Skydiving" data-price="¥2,899">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tour 2 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="nature" id="milford">
+            <div class="relative">
+              <img src="https://t8.baidu.com/it/u=3359220910,1933030477&fm=193" alt="Milford Sound" class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(96 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Milford Sound Cruise</h3>
+              <p class="text-gray-600 text-sm mb-4">Explore the 8th Wonder of the World, admire waterfalls and wildlife, professional guide provides detailed explanations.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 2.5 hours</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Fiordland National Park</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥1,699</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Milford Sound Cruise" data-price="¥1,699">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tour 3 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="culture" id="maori">
+            <div class="relative">
+              <img src="https://res.klook.com/image/upload/c_fill,w_1265,h_712/q_80/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/w4acnkgddiwaeaghc9ry.jpg" alt="Maori Cultural Experience" class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(156 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Maori Cultural Village Experience</h3>
+              <p class="text-gray-600 text-sm mb-4">Participate in traditional welcome ceremony, watch cultural performances, taste hangi food, deeply understand Maori culture.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 4 hours</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Rotorua</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥999</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Maori Cultural Village Experience" data-price="¥999">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tour 4 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="culture" id="hobbiton">
+            <div class="relative">
+              <img src="https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%276ZyN5q%2BU54m55Lq65p2R5ri46KeIXzE3Mjk5NjgzMTMuMDM0Mjg1XzE3Mjk5NjgzMTMuODEwNzc5XzE3Mjk5NjgzMTQuODI4NzcxOF8xNzI5OTY4MzE2LjE0Mzc4N18xNzI5OTY4MzE2Ljk3MDE0OF8xNzI5OTY4MzE4LjA4NTUwNzQ%3D%27/5.png" alt="Hobbiton Village" class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(215 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Hobbiton Village Tour</h3>
+              <p class="text-gray-600 text-sm mb-4">Visit the filming location of "The Lord of the Rings", step into fairy-tale Hobbit holes, professional guide tells behind-the-scenes stories.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 2 hours</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Matamata</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥1,299</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Hobbiton Village Tour" data-price="¥1,299">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tour 5 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="adventure" id="bungee">
+            <div class="relative">
+              <img src="https://dimg06.c-ctrip.com/images/350f0u000000j5phyDC63_Z_1000_0.jpg?proc=resize/m_z,w_1000;crop/m_c,w_1000,h_1000,x_0,y_0,DD72" alt="Auckland Bungee" class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(87 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Auckland Bridge Bungee Jumping</h3>
+              <p class="text-gray-600 text-sm mb-4">Jump from the iconic Auckland Bridge, overlook the beautiful Waitemata Harbour, experience ultimate thrill.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 1.5 hours</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Auckland</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥1,599</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Auckland Bridge Bungee Jumping" data-price="¥1,599">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tour 6 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="nature" id="fox-glacier">
+            <div class="relative">
+              <img src="https://img.pconline.com.cn/images/upload/upc/tx/photoblog/1409/19/c2/38759807_38759807_1411101192910.jpg" alt="Fox Glacier" class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(103 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Fox Glacier Helicopter Tour</h3>
+              <p class="text-gray-600 text-sm mb-4">Take a helicopter to land on the glacier, explore the blue ice cave, professional guide provides safety equipment and explanations.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 3 hours</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Westland Tai Poutini National Park</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥3,299</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Fox Glacier Helicopter Tour" data-price="¥3,299">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tour 7 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="food" id="wine-tour">
+            <div class="relative">
+              <img src="https://qcloud.dpfile.com/pc/pTsOs_w4JAze2IiDvHIBcwZWHClnoXLWgN2jEUSIquvPvyXpkEg0G51WSRUgRXWr.jpg" alt="Marlborough Wine" class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(142 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Marlborough Wine Tasting Tour</h3>
+              <p class="text-gray-600 text-sm mb-4">Visit world-famous wineries, taste award-winning Sauvignon Blanc, learn wine production process, enjoy food pairing.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 5 hours</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Marlborough</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥1,899</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Marlborough Wine Tasting Tour" data-price="¥1,899">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tour 8 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="adventure" id="jetboat">
+            <div class="relative">
+              <img src="https://d00.paixin.com/thumbs/1585997/24709881/staff_1024.jpg" alt="Shotover Jet" class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(118 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Shotover River Jet Boat</h3>
+              <p class="text-gray-600 text-sm mb-4">Experience thrilling jet boat ride on Shotover River canyon, professional driver performs 360-degree spins.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 1 hour</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Queenstown</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥899</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Shotover River Jet Boat" data-price="¥899">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tour 9 -->
+          <div class="tour-item bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-custom" data-category="nature" id="christchurch">
+            <div class="relative">
+              <img src="https://dimg04.c-ctrip.com/images/02Y2o12000alhwcniB537_R_1080_808_Q90.jpg" alt="Christchurch Gondola" class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="text-yellow-400 flex">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                </div>
+                <span class="text-gray-600 text-sm ml-2">(76 reviews)</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Christchurch Gondola & City Tour</h3>
+              <p class="text-gray-600 text-sm mb-4">Take cable car to Port Hills summit, overlook Christchurch city and harbor, visit city landmarks and botanical gardens.</p>
+              <div class="mb-4">
+                <div class="flex items-center text-sm text-gray-600 mb-1">
+                  <i class="fa fa-clock-o mr-2 text-primary"></i>
+                  <span>Approx. 4 hours</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <i class="fa fa-map-marker mr-2 text-primary"></i>
+                  <span>Christchurch</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-primary font-bold text-xl">¥1,199</span>
+                  <span class="text-gray-500 text-sm">/person</span>
+                </div>
+                <button class="book-btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-custom text-sm font-medium" data-tour="Christchurch Gondola & City Tour" data-price="¥1,199">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Contact Us Page Content -->
+  <main id="contactPage" class="page pt-24">
+    <!-- Page Title Section -->
+    <section class="bg-primary py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4">Contact Us</h1>
+        <p class="text-white/80 max-w-2xl mx-auto text-lg">
+          Have questions about New Zealand travel? Our travel consultants are ready to provide you with professional advice and customized travel plans
+        </p>
+      </div>
+    </section>
+    
+    <!-- Contact Form & Information Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-3 gap-12">
+          <!-- Contact Information -->
+          <div class="lg:col-span-1">
+            <div class="bg-white rounded-xl shadow-md p-8">
+              <h2 class="text-2xl font-bold mb-6">Contact Information</h2>
+              
+              <div class="space-y-6">
+                <div class="flex items-start">
+                  <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                    <i class="fa fa-map-marker text-primary"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold mb-1">Address</h3>
+                    <p class="text-gray-600">123 Queen Street, Auckland CBD, Auckland 1010, New Zealand</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                    <i class="fa fa-phone text-primary"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold mb-1">Phone</h3>
+                    <p class="text-gray-600">+64 9-123 4567</p>
+                    <p class="text-gray-600">+64 800 123 456 (Toll Free)</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                    <i class="fa fa-envelope text-primary"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold mb-1">Email</h3>
+                    <p class="text-gray-600">info@travelnz.com</p>
+                    <p class="text-gray-600">bookings@travelnz.com</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                    <i class="fa fa-clock-o text-primary"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold mb-1">Business Hours</h3>
+                    <p class="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    <p class="text-gray-600">Saturday: 10:00 AM - 4:00 PM</p>
+                    <p class="text-gray-600">Sunday: Closed</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-8 pt-6 border-t border-gray-200">
+                <h3 class="font-bold mb-4">Follow Us</h3>
+                <div class="flex space-x-4">
+                  <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-custom">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-custom">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-custom">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-custom">
+                    <i class="fa fa-weibo"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Contact Form -->
+          <div class="lg:col-span-2">
+            <div class="bg-white rounded-xl shadow-md p-8">
+              <h2 class="text-2xl font-bold mb-6">Send Message</h2>
+              
+              <form id="contactForm" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                    <input type="text" id="firstName" name="firstName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                  </div>
+                  <div>
+                    <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                    <input type="text" id="lastName" name="lastName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                  </div>
+                </div>
+                
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                  <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                
+                <div>
+                  <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                
+                <div>
+                  <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+                  <select id="subject" name="subject" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <option value="">Please select a subject</option>
+                    <option value="tour-inquiry">Tour Inquiry</option>
+                    <option value="custom-tour">Custom Tour Request</option>
+                    <option value="booking-assistance">Booking Assistance</option>
+                    <option value="group-booking">Group Booking</option>
+                    <option value="general-question">General Question</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                  <textarea id="message" name="message" rows="6" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                </div>
+                
+                <div class="flex items-center">
+                  <input type="checkbox" id="newsletter" name="newsletter" class="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded">
+                  <label for="newsletter" class="ml-2 text-sm text-gray-700">Subscribe to our newsletter for travel tips and special offers</label>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-custom">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-16 bg-neutral">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-center mb-12">Frequently Asked Questions</h2>
+          
+          <div class="space-y-4">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <h3 class="font-bold text-lg mb-2">What is the best time to visit New Zealand?</h3>
+              <p class="text-gray-600">New Zealand is a year-round destination. Summer (December-February) is ideal for outdoor activities and beach visits. Autumn (March-May) offers beautiful foliage and fewer crowds. Winter (June-August) is perfect for skiing and snow sports. Spring (September-November) features blooming flowers and newborn wildlife.</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <h3 class="font-bold text-lg mb-2">Do I need a visa to visit New Zealand?</h3>
+              <p class="text-gray-600">Visa requirements depend on your nationality. Citizens of many countries can visit New Zealand for up to 3 months without a visa. However, it's essential to check the latest requirements with the New Zealand Immigration Service before booking your trip.</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <h3 class="font-bold text-lg mb-2">What is the cancellation policy?</h3>
+              <p class="text-gray-600">Our standard cancellation policy allows for full refunds up to 30 days before your tour date. Cancellations between 15-30 days before the tour receive a 50% refund. Cancellations within 14 days of the tour are non-refundable. Some specialized tours may have different policies, which will be clearly stated during booking.</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <h3 class="font-bold text-lg mb-2">Are your tours suitable for children and seniors?</h3>
+              <p class="text-gray-600">Yes, we offer tours suitable for all ages. Each tour description includes information about physical requirements and age recommendations. We also offer private tours that can be customized to accommodate specific needs and preferences.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="md:col-span-1">
+          <div class="flex items-center mb-4">
+            <svg width="40" height="20" viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+              <circle cx="40" cy="40" r="35" fill="#ffffff" opacity="0.2"/>
+              <path d="M40,10 C50,20 60,25 65,35 C70,45 65,55 60,65 C50,75 45,70 40,65 C35,70 30,75 20,65 C15,55 10,45 15,35 C20,25 30,20 40,10 Z" fill="#ffffff"/>
+              <path d="M70,60 L90,30 L110,50 L130,25 L150,55 L170,35 L190,60" fill="none" stroke="#ffffff" stroke-width="3"/>
+              <path d="M70,60 C90,70 110,50 130,60 C150,70 170,50 190,60" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="text-white font-bold">Travel NZ</span>
+          </div>
+          <p class="text-gray-400 mb-4">Providing unforgettable travel experiences in New Zealand since 2005.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-custom">
+              <i class="fa fa-facebook"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-custom">
+              <i class="fa fa-instagram"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-custom">
+              <i class="fa fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-custom">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="font-bold text-lg mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom nav-link" data-page="home">Home</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom nav-link" data-page="tours">Tours</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom nav-link" data-page="contact">Contact Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom">About Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom">Blog</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-bold text-lg mb-4">Popular Tours</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom scroll-to-tour" data-tour="skydive">Queenstown Skydiving</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom scroll-to-tour" data-tour="milford">Milford Sound Cruise</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom scroll-to-tour" data-tour="maori">Maori Cultural Experience</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-custom scroll-to-tour" data-tour="hobbiton">Hobbiton Village Tour</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-bold text-lg mb-4">Contact Information</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-start">
+              <i class="fa fa-map-marker mr-2 mt-1"></i>
+              <span>123 Queen Street, Auckland, New Zealand</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fa fa-phone mr-2"></i>
+              <span>+64 9-123 4567</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fa fa-envelope mr-2"></i>
+              <span>info@travelnz.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2023 Travel NZ. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold">Book Tour</h3>
+          <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+            <i class="fa fa-times text-xl"></i>
+          </button>
+        </div>
+        
+        <div class="mb-6">
+          <h4 id="modalTourName" class="font-bold text-lg mb-1">Tour Name</h4>
+          <p id="modalTourPrice" class="text-primary font-bold">Price</p>
+        </div>
+        
+        <form id="bookingForm">
+          <div class="space-y-4">
+            <div>
+              <label for="bookingName" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+              <input type="text" id="bookingName" name="bookingName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+            </div>
+            
+            <div>
+              <label for="bookingEmail" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+              <input type="email" id="bookingEmail" name="bookingEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+            </div>
+            
+            <div>
+              <label for="bookingPhone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+              <input type="tel" id="bookingPhone" name="bookingPhone" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="bookingDate" class="block text-sm font-medium text-gray-700 mb-1">Tour Date *</label>
+                <input type="date" id="bookingDate" name="bookingDate" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              
+              <div>
+                <label for="bookingGuests" class="block text-sm font-medium text-gray-700 mb-1">Number of Guests *</label>
+                <select id="bookingGuests" name="bookingGuests" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="1">1 Guest</option>
+                  <option value="2">2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4 Guests</option>
+                  <option value="5">5 Guests</option>
+                  <option value="6">6+ Guests</option>
+                </select>
+              </div>
+            </div>
+            
+            <div>
+              <label for="bookingNotes" class="block text-sm font-medium text-gray-700 mb-1">Special Requirements</label>
+              <textarea id="bookingNotes" name="bookingNotes" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+            </div>
+          </div>
+          
+          <div class="mt-6 flex space-x-3">
+            <button type="button" id="cancelBooking" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-custom">
+              Cancel
+            </button>
+            <button type="submit" class="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-4 rounded-lg transition-custom">
+              Confirm Booking
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cost Details Modal -->
+  <div id="costModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold" id="costModalTitle">Cost Details</h3>
+          <button id="closeCostModal" class="text-gray-500 hover:text-gray-700">
+            <i class="fa fa-times text-xl"></i>
+          </button>
+        </div>
+        
+        <div id="costModalContent">
+          <!-- Content will be dynamically inserted here -->
+        </div>
+        
+        <div class="mt-6 text-center">
+          <button id="closeCostModalBtn" class="bg-primary hover:bg-primary/90 text-white font-semibold py-2 px-6 rounded-lg transition-custom">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Message -->
+  <div id="successMessage" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform">
+    <div class="flex items-center">
+      <i class="fa fa-check-circle mr-2"></i>
+      <span>Your message has been sent successfully!</span>
+    </div>
+  </div>
+
+  <script>
+    // Navigation functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
+      const menuBtn = document.getElementById('menuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      
+      menuBtn.addEventListener('click', function() {
+        const isOpen = mobileMenu.classList.contains('opacity-0');
+        
+        if (isOpen) {
+          mobileMenu.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+          mobileMenu.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        } else {
+          mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          mobileMenu.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+        }
+      });
+      
+      // Page navigation
+      const navLinks = document.querySelectorAll('.nav-link');
+      const pages = document.querySelectorAll('.page');
+      
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Close mobile menu if open
+          mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          mobileMenu.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+          
+          // Get target page
+          const targetPage = this.getAttribute('data-page');
+          
+          // Hide all pages
+          pages.forEach(page => {
+            page.classList.remove('active');
+          });
+          
+          // Show target page
+          document.getElementById(targetPage + 'Page').classList.add('active');
+          
+          // Scroll to top
+          window.scrollTo(0, 0);
+        });
+      });
+      
+      // Navbar background on scroll
+      const navbar = document.getElementById('navbar');
+      
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+          navbar.classList.remove('bg-transparent');
+          navbar.classList.add('bg-white', 'shadow-md');
+          navbar.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('text-white');
+            link.classList.add('text-dark');
+          });
+          navbar.querySelector('.logo span').classList.remove('text-white');
+          navbar.querySelector('.logo span').classList.add('text-dark');
+          menuBtn.classList.remove('text-white');
+          menuBtn.classList.add('text-dark');
+        } else {
+          navbar.classList.add('bg-transparent');
+          navbar.classList.remove('bg-white', 'shadow-md');
+          navbar.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.add('text-white');
+            link.classList.remove('text-dark');
+          });
+          navbar.querySelector('.logo span').classList.add('text-white');
+          navbar.querySelector('.logo span').classList.remove('text-dark');
+          menuBtn.classList.add('text-white');
+          menuBtn.classList.remove('text-dark');
+        }
+      });
+      
+      // Tour filtering
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const tourItems = document.querySelectorAll('.tour-item');
+      
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const filter = this.getAttribute('data-filter');
+          
+          // Update active filter button
+          filterBtns.forEach(b => b.classList.remove('filter-active'));
+          this.classList.add('filter-active');
+          
+          // Filter tour items
+          tourItems.forEach(item => {
+            if (filter === 'all' || item.getAttribute('data-category') === filter) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+      
+      // Route selection on map
+      const routeItems = document.querySelectorAll('.route-item');
+      const routeLines = document.querySelectorAll('.route-line');
+      
+      routeItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const route = this.getAttribute('data-route');
+          
+          // Update active route item
+          routeItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show corresponding route on map
+          routeLines.forEach(line => {
+            line.classList.add('hidden');
+          });
+          
+          if (route === 'north') {
+            document.getElementById('routeNorth').classList.remove('hidden');
+          } else if (route === 'south') {
+            document.getElementById('routeSouth').classList.remove('hidden');
+          } else if (route === 'combo') {
+            document.getElementById('routeCombo1').classList.remove('hidden');
+            document.getElementById('routeCombo2').classList.remove('hidden');
+          }
+        });
+      });
+      
+      // Booking modal
+      const bookBtns = document.querySelectorAll('.book-btn');
+      const bookingModal = document.getElementById('bookingModal');
+      const closeModal = document.getElementById('closeModal');
+      const cancelBooking = document.getElementById('cancelBooking');
+      const modalTourName = document.getElementById('modalTourName');
+      const modalTourPrice = document.getElementById('modalTourPrice');
+      const bookingForm = document.getElementById('bookingForm');
+      
+      bookBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const tourName = this.getAttribute('data-tour');
+          const tourPrice = this.getAttribute('data-price');
+          
+          modalTourName.textContent = tourName;
+          modalTourPrice.textContent = tourPrice;
+          
+          bookingModal.classList.remove('hidden');
+        });
+      });
+      
+      // Close modal functions
+      function closeBookingModal() {
+        bookingModal.classList.add('hidden');
+      }
+      
+      closeModal.addEventListener('click', closeBookingModal);
+      cancelBooking.addEventListener('click', closeBookingModal);
+      
+      // Booking form submission
+      bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // In a real application, you would send the form data to a server here
+        // For this demo, we'll just show a success message and close the modal
+        
+        closeBookingModal();
+        showSuccessMessage('Your tour has been booked successfully!');
+      });
+      
+      // Contact form submission
+      const contactForm = document.getElementById('contactForm');
+      
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // In a real application, you would send the form data to a server here
+        // For this demo, we'll just show a success message
+        
+        showSuccessMessage('Your message has been sent successfully!');
+        contactForm.reset();
+      });
+      
+      // Success message function
+      function showSuccessMessage(message) {
+        const successMessage = document.getElementById('successMessage');
+        successMessage.querySelector('span').textContent = message;
+        successMessage.classList.remove('translate-x-full');
+        
+        setTimeout(() => {
+          successMessage.classList.add('translate-x-full');
+        }, 3000);
+      }
+      
+      // Scroll to tour function
+      const scrollToTourLinks = document.querySelectorAll('.scroll-to-tour');
+      
+      scrollToTourLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const tourId = this.getAttribute('data-tour');
+          
+          // Switch to tours page
+          pages.forEach(page => {
+            page.classList.remove('active');
+          });
+          document.getElementById('toursPage').classList.add('active');
+          
+          // Scroll to the tour after a short delay to allow page switch
+          setTimeout(() => {
+            const tourElement = document.getElementById(tourId);
+            if (tourElement) {
+              window.scrollTo({
+                top: tourElement.offsetTop - 100,
+                behavior: 'smooth'
+              });
+            }
+          }, 100);
+        });
+      });
+      
+      // Tour filter from home page
+      const tourFilters = document.querySelectorAll('.tour-filter');
+      
+      tourFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const filterType = this.getAttribute('data-filter');
+          
+          // Switch to tours page
+          pages.forEach(page => {
+            page.classList.remove('active');
+          });
+          document.getElementById('toursPage').classList.add('active');
+          
+          // Apply the filter after a short delay
+          setTimeout(() => {
+            // Find and click the corresponding filter button
+            const filterBtn = document.querySelector(`.filter-btn[data-filter="${filterType}"]`);
+            if (filterBtn) {
+              filterBtn.click();
+            }
+          }, 100);
+        });
+      });
+      
+      // Route to tours page
+      const routeToTours = document.getElementById('routeToTours');
+      
+      routeToTours.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Switch to tours page
+        pages.forEach(page => {
+          page.classList.remove('active');
+        });
+        document.getElementById('toursPage').classList.add('active');
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+      });
+      
+      // Cost details modal
+      const viewCostBtns = document.querySelectorAll('.view-cost-btn');
+      const costModal = document.getElementById('costModal');
+      const closeCostModal = document.getElementById('closeCostModal');
+      const closeCostModalBtn = document.getElementById('closeCostModalBtn');
+      const costModalTitle = document.getElementById('costModalTitle');
+      const costModalContent = document.getElementById('costModalContent');
+      
+      // Cost data for different routes
+      const costData = {
+        north: {
+          title: 'North Island Classic 5-Day Tour Cost Details',
+          content: `
+            <div class="space-y-4">
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Included in the Price:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>4 nights accommodation (4-star hotels)</li>
+                  <li>All transportation during the tour</li>
+                  <li>Professional English-speaking guide</li>
+                  <li>All breakfasts and 3 dinners</li>
+                  <li>Entrance fees to all attractions</li>
+                  <li>Hobbiton Movie Set tour</li>
+                  <li>Rotorua cultural experience</li>
+                  <li>Waitomo Glowworm Caves visit</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Not Included:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>International flights</li>
+                  <li>Travel insurance</li>
+                  <li>Lunches and 2 dinners</li>
+                  <li>Personal expenses</li>
+                  <li>Optional activities</li>
+                  <li>Gratuities for guide and driver</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Payment Schedule:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>Deposit: ¥2,000 upon booking</li>
+                  <li>Final payment: 60 days before departure</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Cancellation Policy:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>60+ days before departure: Full refund</li>
+                  <li>30-59 days before departure: 50% refund</li>
+                  <li>15-29 days before departure: 25% refund</li>
+                  <li>0-14 days before departure: No refund</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        south: {
+          title: 'South Island Nature 7-Day Tour Cost Details',
+          content: `
+            <div class="space-y-4">
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Included in the Price:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>6 nights accommodation (4-star hotels and lodges)</li>
+                  <li>All transportation during the tour</li>
+                  <li>Professional English-speaking guide</li>
+                  <li>All breakfasts and 4 dinners</li>
+                  <li>Entrance fees to all attractions</li>
+                  <li>Milford Sound cruise</li>
+                  <li>Fox Glacier helicopter tour</li>
+                  <li>Queenstown gondola ride</li>
+                  <li>Wildlife watching cruise</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Not Included:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>International flights</li>
+                  <li>Travel insurance</li>
+                  <li>Lunches and 3 dinners</li>
+                  <li>Personal expenses</li>
+                  <li>Optional activities (bungee, jet boat, etc.)</li>
+                  <li>Gratuities for guide and driver</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Payment Schedule:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>Deposit: ¥3,000 upon booking</li>
+                  <li>Final payment: 60 days before departure</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Cancellation Policy:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>60+ days before departure: Full refund</li>
+                  <li>30-59 days before departure: 50% refund</li>
+                  <li>15-29 days before departure: 25% refund</li>
+                  <li>0-14 days before departure: No refund</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        combo: {
+          title: 'North & South Island Panorama 12-Day Tour Cost Details',
+          content: `
+            <div class="space-y-4">
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Included in the Price:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>11 nights accommodation (4-star hotels and luxury lodges)</li>
+                  <li>All transportation including domestic flights</li>
+                  <li>Professional English-speaking guide</li>
+                  <li>All breakfasts and 7 dinners</li>
+                  <li>Entrance fees to all attractions</li>
+                  <li>Hobbiton Movie Set tour</li>
+                  <li>Rotorua cultural experience</li>
+                  <li>Waitomo Glowworm Caves visit</li>
+                  <li>Milford Sound cruise</li>
+                  <li>Fox Glacier helicopter tour</li>
+                  <li>Queenstown gondola ride</li>
+                  <li>Wildlife watching cruise</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Not Included:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>International flights</li>
+                  <li>Travel insurance</li>
+                  <li>Lunches and 5 dinners</li>
+                  <li>Personal expenses</li>
+                  <li>Optional activities</li>
+                  <li>Gratuities for guide and driver</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Payment Schedule:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>Deposit: ¥5,000 upon booking</li>
+                  <li>Second payment: 50% 90 days before departure</li>
+                  <li>Final payment: 60 days before departure</li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-bold mb-2">Cancellation Policy:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>90+ days before departure: Full refund</li>
+                  <li>60-89 days before departure: 75% refund</li>
+                  <li>30-59 days before departure: 50% refund</li>
+                  <li>15-29 days before departure: 25% refund</li>
+                  <li>0-14 days before departure: No refund</li>
+                </ul>
+              </div>
+            </div>
+          `
+        }
+      };
+      
+      viewCostBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const route = this.getAttribute('data-route');
+          const data = costData[route];
+          
+          if (data) {
+            costModalTitle.textContent = data.title;
+            costModalContent.innerHTML = data.content;
+            costModal.classList.remove('hidden');
+          }
+        });
+      });
+      
+      // Close cost modal
+      function closeCostModalFunc() {
+        costModal.classList.add('hidden');
+      }
+      
+      closeCostModal.addEventListener('click', closeCostModalFunc);
+      closeCostModalBtn.addEventListener('click', closeCostModalFunc);
+      
+      // Close modals when clicking outside
+      window.addEventListener('click', function(e) {
+        if (e.target === bookingModal) {
+          closeBookingModal();
+        }
+        if (e.target === costModal) {
+          closeCostModalFunc();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
